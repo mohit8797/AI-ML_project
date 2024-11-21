@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender System</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Futura:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F8F9FA; /* Light off-white background */
+            color: black;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Header Section */
+        .header-section {
+            background-color: #FFFFFF; /* White background */
+            color: black; /* Black text */
+            padding: 50px 0;
+            text-align: center;
+            animation: fadeInHeader 1.5s ease-in-out;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .header-section h1 {
+            font-size: 70px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            color: black;
+            margin: 0;
+            animation: slideUp 1s ease-out;
+        }
+        /* Navbar */
+        .navbar {
+            background-color: #F5F5F5; /* Light gray for navbar */
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: slideIn 1.5s ease-in-out;
+            margin-bottom: 0; /* Remove gap below navbar */
+        }
+        .navbar-nav {
+            display: inline-block;
+            float: none;
+        }
+        .navbar-nav > li {
+            display: inline-block;
+        }
+        .navbar-nav > li > a {
+            color: #333333;
+            font-size: 18px;
+            padding: 15px 20px;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.4s ease;
+        }
+        .navbar-nav > li > a:hover {
+            background-color: #000; /* Black background */
+            color: #FFFFFF; /* White text */
+            text-decoration: none;
+            border-radius: 5px;
+            transform: scale(1.05); /* Slight zoom effect */
+            animation: hoverEffect 0.5s ease-in-out;
+        }
+        /* Search Bar Section */
+        .search-bar {
+            background-color: #FFFFFF; /* White background for contrast */
+            padding: 50px 0;
+            text-align: center;
+            margin-top: -20px; /* Remove gap between navbar and search box */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow */
+            border-radius: 10px;
+            animation: fadeInText 1.5s ease-in-out;
+        }
+        .search-bar h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 30px;
+        }
+        .search-bar form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .search-bar input[type="text"] {
+            width: 40%;
+            padding: 15px;
+            font-size: 18px;
+            border: none; /* Removed the border */
+            border-radius: 50px; /* Rounded corners */
+            margin-right: 20px;
+            box-sizing: border-box;
+            background-color: #fff; /* White background for input */
+            color: #333; /* Black text */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow */
+            transition: all 0.3s ease;
+        }
+        .search-bar input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow on focus */
+        }
+        .search-bar button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #000; /* Black background */
+            color: white; /* White text */
+            border: none;
+            border-radius: 50px; /* Rounded corners */
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+        .search-bar button:hover {
+            background-color: #333; /* Darker black on hover */
+            transform: translateY(-3px); /* Lift effect */
+        }
+        /* Result Books Section */
+        .books-section {
+            margin-top: 30px; /* Space between search box and books */
+            padding-bottom: 50px;
+        }
+        .book-card {
+            background-color: #FFFFFF; /* White background for cards */
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 450px;
+        }
+        .book-card:hover {
+            transform: translateY(-5px); /* Slight lifting effect */
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+        }
+        .book-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .book-card p {
+            font-size: 18px;
+            font-family: 'Futura', sans-serif;
+            color: #333;
+            margin-top: 15px;
+            transition: color 0.3s ease;
+        }
+        .book-card h4 {
+            font-size: 16px;
+            color: #666666;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+        .book-card:hover p,
+        .book-card:hover h4 {
+            color: #000; /* Darken text on hover */
+        }
+        /* Animations */
+        @keyframes fadeInHeader {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes hoverEffect {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header-section">
+        <h1>BOOKS</h1>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/recommend">Recommend</a></li>
+            <li><a>Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Search Bar Section -->
+    <div class="search-bar">
+        <h2>Find Your Favorite Book</h2>
+        <form action="/recommend_books" method="post">
+            <input name="user_input" type="text" placeholder="Enter book genre or name">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Books Results Section -->
+    <div class="container books-section">
+        <div class="row">
+            {% if data %}
+                {% for i in data %}
+                    <div class="col-md-3 col-sm-6">
+                        <div class="book-card">
+                            <img class="card-img-top" src="{{i[2]}}" alt="Book Cover">
+                            <p>{{i[0]}}</p>
+                            <h4>Author: {{i[1]}}</h4>
+                            <h4>Rating: {{i[3]}}</h4>
+                        </div>
+                    </div>
+                    {% if loop.index % 4 == 0 %}
+                        </div><div class="row">
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
